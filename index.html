@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Особое приглашение</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="music-note">♪</div>
+    <div class="container">
+        <div class="envelope" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-front"></div>
+            <div class="envelope-content">
+                <div class="heart">💕</div>
+                <div>Для тебя</div>
+                <div class="click-text">Нажми, чтобы открыть</div>
+            </div>
+        </div>
+        <div class="invitation" id="invitation">
+            <h1>Особое приглашение<br>Для Иришки 💖</h1>
+            <p>Привет, красавица! 🌹<br><br>
+            Я хочу пригласить тебя на особенный вечер, полный романтики и волшебства. 
+            Будет музыка, которая нам нравится, уютная атмосфера и много приятных сюрпризов.<br><br>
+            Что скажешь? Проведем время вместе?</p>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="showResponse('yes')">Да, конечно! 💕</button>
+                <button class="btn btn-no" onclick="showResponse('no')">Может быть позже 🤔</button>
+            </div>
+        </div>
+        <div class="response response-yes" id="response-yes">
+            <h2>Ура! 🎉</h2>
+            <p>Ты сделала мой день! Не могу дождаться нашей встречи. 
+            Это будет незабываемо! 💕✨</p>
+        </div>
+        <div class="response response-no" id="response-no">
+            <h2>Понимаю 💙</h2>
+            <p>Ничего страшного! Когда будешь готова, я буду ждать. 
+            Ты стоишь того, чтобы подождать 🌟</p>
+        </div>
+    </div>
+    <div class="floating-hearts" id="floating-hearts"></div>
+
+    <script>
+        // Открытие конверта
+        document.getElementById('envelope').addEventListener('click', function() {
+            this.classList.add('opened');
+            setTimeout(() => {
+                document.getElementById('invitation').classList.add('show');
+                createFloatingHearts();
+            }, 600);
+        });
+
+        // Обработка ответов
+        function showResponse(type) {
+            document.getElementById('invitation').classList.remove('show');
+            setTimeout(() => {
+                document.getElementById('response-' + type).classList.add('show');
+                if (type === 'yes') {
+                    createCelebration();
+                }
+            }, 300);
+        }
+
+        // Создание плавающих сердечек
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floating-hearts');
+            const hearts = ['💕', '💖', '💗', '💝', '💘'];
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heartsContainer.appendChild(heart);
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }, 800);
+        }
+
+        // Празднование при положительном ответе
+        function createCelebration() {
+            const heartsContainer = document.getElementById('floating-hearts');
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.textContent = '🎉';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = '3s';
+                    heart.style.fontSize = '30px';
+                    heartsContainer.appendChild(heart);
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        // Анимация музыкальной ноты
+        function animateMusicNote() {
+            const musicNote = document.querySelector('.music-note');
+            const notes = ['♪', '♫', '♬', '♩'];
+            let index = 0;
+            setInterval(() => {
+                musicNote.textContent = notes[index];
+                index = (index + 1) % notes.length;
+            }, 2000);
+        }
+
+        // Запуск анимации при загрузке
+        animateMusicNote();
+    </script>
+</body>
+</html>
